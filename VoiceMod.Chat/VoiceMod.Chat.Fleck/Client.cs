@@ -14,6 +14,7 @@ namespace VoiceMod.Chat.Fleck
 
         private byte[] _bytes = new byte[1024];
         private ClientWebSocket _client;
+        private string NickName { get; set; } = string.Empty;
 
         public Client(int port)
         {
@@ -22,8 +23,13 @@ namespace VoiceMod.Chat.Fleck
 
         public void Initialize()
         {
-
             var tokSrc = new CancellationTokenSource();
+
+            do
+            {
+                Console.WriteLine("Please write your nickname: ");
+                NickName = Console.ReadLine();
+            } while (string.IsNullOrWhiteSpace(NickName));
 
             _client = new ClientWebSocket();
             var task = _client.ConnectAsync(new Uri($"{Url}:{_port}"), tokSrc.Token);
@@ -38,7 +44,7 @@ namespace VoiceMod.Chat.Fleck
             var tokSrc = new CancellationTokenSource();
 
             var task = _client.SendAsync(
-                       new ArraySegment<byte>(Encoding.UTF8.GetBytes(message)),
+                       new ArraySegment<byte>(Encoding.UTF8.GetBytes($"{NickName}: {message}")),
                        WebSocketMessageType.Text,
                        false,
                        tokSrc.Token
