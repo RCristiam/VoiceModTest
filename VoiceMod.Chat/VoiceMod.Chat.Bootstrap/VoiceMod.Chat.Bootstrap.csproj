@@ -4,4 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VoiceMod.Abstractions\VoiceMod.Chat.Abstractions.csproj" />
+    <ProjectReference Include="..\VoiceMod.Chat.Fleck\VoiceMod.Chat.Fleck.csproj" />
+  </ItemGroup>
+
 </Project>
