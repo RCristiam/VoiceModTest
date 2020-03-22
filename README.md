@@ -9,7 +9,7 @@ This repository belongs to a technical interview for Voicemod. The basic structu
 
 ## VoiceMod.Chat.Abstractions
 
-Contains the interfaces for the Client and Server
+Contains all interfaces for loose coupling (SOL**I**D).
 
 ## VoiceMod.Chat.Bootstrap
 
@@ -25,7 +25,7 @@ There are two extensions methods:
 
 ## VoiceMod.Chat.Executable
 
-The executable of the application using .NET Core 2.2. 
+The executable of the application using .NET Core 2.2.
 
 ## VoiceMod.Chat.Fleck
 
