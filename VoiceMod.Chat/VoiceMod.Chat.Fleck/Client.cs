@@ -25,7 +25,6 @@ namespace VoiceMod.Chat.Fleck
 
         private string NickName { get; set; } = string.Empty;
 
-
         public async Task Initialize()
         {
             var tokSrc = new CancellationTokenSource();
@@ -47,7 +46,6 @@ namespace VoiceMod.Chat.Fleck
             await Task.WhenAll(ListenToMessages());
         }
 
-
         public async Task SendMessage(string message)
         {
             var tokSrc = new CancellationTokenSource();
@@ -58,7 +56,6 @@ namespace VoiceMod.Chat.Fleck
                    tokSrc.Token
                );
         }
-
 
         private async Task ListenToMessages()
         {
@@ -87,7 +84,7 @@ namespace VoiceMod.Chat.Fleck
                             case WebSocketMessageType.Text:
                                 using (var reader = new StreamReader(ms, Encoding.UTF8))
                                 {
-                                    _msgText.Show($"Server sent: {reader.ReadToEnd()}");
+                                    _msgText.Show($"{reader.ReadToEnd()}");
                                 }
                                 break;
                         }
