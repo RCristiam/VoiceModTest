@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoiceMod.Chat.Abstractions", "VoiceMod.Abstractions\VoiceMod.Chat.Abstractions.csproj", "{83BB0118-7161-4001-8A21-FF58C11A2882}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoiceMod.Chat.Bootstrap", "VoiceMod.Chat.Bootstrap\VoiceMod.Chat.Bootstrap.csproj", "{0569E732-4336-4040-A9D9-C1210E7A7D1C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoiceMod.Chat.Fleck", "VoiceMod.Chat.Fleck\VoiceMod.Chat.Fleck.csproj", "{8C0A8044-5638-440C-8618-7851696D3A9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceMod.Chat.Executable", "VoiceMod.Chat.Executable\VoiceMod.Chat.Executable.csproj", "{0BB0044E-2B44-4695-8C1A-24FE12237F32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83BB0118-7161-4001-8A21-FF58C11A2882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83BB0118-7161-4001-8A21-FF58C11A2882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83BB0118-7161-4001-8A21-FF58C11A2882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83BB0118-7161-4001-8A21-FF58C11A2882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0569E732-4336-4040-A9D9-C1210E7A7D1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0569E732-4336-4040-A9D9-C1210E7A7D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0569E732-4336-4040-A9D9-C1210E7A7D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0569E732-4336-4040-A9D9-C1210E7A7D1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C0A8044-5638-440C-8618-7851696D3A9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C0A8044-5638-440C-8618-7851696D3A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C0A8044-5638-440C-8618-7851696D3A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C0A8044-5638-440C-8618-7851696D3A9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BB0044E-2B44-4695-8C1A-24FE12237F32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BB0044E-2B44-4695-8C1A-24FE12237F32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BB0044E-2B44-4695-8C1A-24FE12237F32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BB0044E-2B44-4695-8C1A-24FE12237F32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70CE67A9-90C4-40A0-BC34-D04555AEB593}
+	EndGlobalSection
+EndGlobal
