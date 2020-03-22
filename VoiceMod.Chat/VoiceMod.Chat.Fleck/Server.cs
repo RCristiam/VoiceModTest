@@ -53,7 +53,7 @@ namespace VoiceMod.Chat.Fleck
         {
             foreach (var socket in ConnectedSockets)
             {
-                await Task.Run(() => socket.Send(message));
+                await Task.Run(() => socket.Send($"Server: {message}"));
             }
         }
 
