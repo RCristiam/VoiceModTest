@@ -1,9 +1,11 @@
-﻿namespace VoiceMod.Chat.Abstractions
+﻿using System.Threading.Tasks;
+
+namespace VoiceMod.Chat.Abstractions
 {
     public interface IChatCommunication
     {
-        void Initialize();
+        Task Initialize();
 
-        void SendMessage(string message);
+        Task SendMessage(string message);
     }
 }

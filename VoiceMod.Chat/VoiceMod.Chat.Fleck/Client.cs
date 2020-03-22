@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using VoiceMod.Chat.Abstractions;
 
 namespace VoiceMod.Chat.Fleck
@@ -10,72 +11,85 @@ namespace VoiceMod.Chat.Fleck
     public class Client : IChatCommunication
     {
         private const string Url = "ws://localhost";
+
+        private readonly IMessageText _msgText;
         private readonly int _port;
 
-        private byte[] _bytes = new byte[1024];
         private ClientWebSocket _client;
-        private string NickName { get; set; } = string.Empty;
 
-        public Client(int port)
+        public Client(IMessageText messageText, int port)
         {
+            _msgText = messageText ?? throw new ArgumentNullException(nameof(messageText));
             _port = port;
         }
 
-        public void Initialize()
+        private string NickName { get; set; } = string.Empty;
+
+
+        public async Task Initialize()
         {
             var tokSrc = new CancellationTokenSource();
 
             do
             {
-                Console.WriteLine("Please write your nickname: ");
+                _msgText.Show("Please write your nickname: ");
                 NickName = Console.ReadLine();
             } while (string.IsNullOrWhiteSpace(NickName));
 
             _client = new ClientWebSocket();
-            var task = _client.ConnectAsync(new Uri($"{Url}:{_port}"), tokSrc.Token);
-            task.Wait(); task.Dispose();
+            await _client.ConnectAsync(new Uri($"{Url}:{_port}"), tokSrc.Token);
 
-            ListenToMessages();
+            if (_client.State == WebSocketState.Open)
+            {
+                _msgText.Show("Connected successfully.");
+            }
+
+            await Task.WhenAll(ListenToMessages());
         }
 
 
-        public void SendMessage(string message)
+        public async Task SendMessage(string message)
         {
             var tokSrc = new CancellationTokenSource();
-
-            var task = _client.SendAsync(
-                       new ArraySegment<byte>(Encoding.UTF8.GetBytes($"{NickName}: {message}")),
-                       WebSocketMessageType.Text,
-                       false,
-                       tokSrc.Token
-                   );
-            task.Wait(); task.Dispose();
+            await _client.SendAsync(
+                   new ArraySegment<byte>(Encoding.UTF8.GetBytes($"{NickName}: {message}")),
+                   WebSocketMessageType.Text,
+                   false,
+                   tokSrc.Token
+               );
         }
 
 
-        private void ListenToMessages()
+        private async Task ListenToMessages()
         {
             WebSocketReceiveResult result;
-            using (var cts = new CancellationTokenSource())
+            while (_client.State == WebSocketState.Open)
             {
-
-                byte[] buffer = new byte[8192];
-                var segment = new ArraySegment<byte>(buffer, 0, buffer.Length);
-                using (var ms = new MemoryStream())
+                using (var cts = new CancellationTokenSource())
                 {
-                    do
+                    byte[] buffer = new byte[8192];
+                    var segment = new ArraySegment<byte>(buffer, 0, buffer.Length);
+                    using (var ms = new MemoryStream())
                     {
-                        result = _client.ReceiveAsync(segment, cts.Token).GetAwaiter().GetResult();
-                        ms.Write(segment.Array, segment.Offset, result.Count);
-                    } while (!result.EndOfMessage);
-
-                    ms.Seek(0, SeekOrigin.Begin);
-
-                    if (result.MessageType == WebSocketMessageType.Text)
-                    {
-                        using (var reader = new StreamReader(ms, Encoding.UTF8))
+                        do
                         {
-                            Console.WriteLine($"Server sent: {reader.ReadToEnd()}");
+                            result = await _client.ReceiveAsync(segment, cts.Token);
+                            ms.Write(segment.Array, segment.Offset, result.Count);
+                        } while (!result.EndOfMessage);
+
+                        ms.Seek(0, SeekOrigin.Begin);
+
+                        switch (result.MessageType)
+                        {
+                            case WebSocketMessageType.Close:
+                                await _client.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+                                break;
+                            case WebSocketMessageType.Text:
+                                using (var reader = new StreamReader(ms, Encoding.UTF8))
+                                {
+                                    _msgText.Show($"Server sent: {reader.ReadToEnd()}");
+                                }
+                                break;
                         }
                     }
                 }

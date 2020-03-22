@@ -20,10 +20,7 @@ namespace VoiceMod.Chat.Executable
                     input = Console.ReadLine();
                 } while (int.TryParse(input, out port) == false);
 
-
-                var builder = new ContainerBuilder()
-                    .CreateCommunicationFactory()
-                    .Build();
+                IContainer builder = CreateAutofacBuilder();
 
                 var factory = builder.Resolve<Func<int, IChatCommunication>>();
 
@@ -40,5 +37,12 @@ namespace VoiceMod.Chat.Executable
                 }
             }
         }
+
+        private static IContainer CreateAutofacBuilder() => 
+            new ContainerBuilder()
+            .CreateCommunicationFactory()
+            .CreateMessageText()
+            .Build();
+
     }
 }
