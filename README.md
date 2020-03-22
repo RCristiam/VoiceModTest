@@ -42,6 +42,7 @@ Client implementation uses [ClientWebSocket](https://docs.microsoft.com/en-us/do
 ## Next steps
 
 In a hypothetical real world scenario, the next steps in this development would be:
+* Create a state machine (State pattern) for the communication (Disconnected, TryingToConnet, Connected)
 * Create a WPF application for the chat
 * Include logs using [log4net](https://logging.apache.org/log4net/) or similar 
  
