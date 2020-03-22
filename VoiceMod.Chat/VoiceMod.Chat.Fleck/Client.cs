@@ -25,6 +25,12 @@ namespace VoiceMod.Chat.Fleck
 
         private string NickName { get; set; } = string.Empty;
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
         public async Task Initialize()
         {
             var tokSrc = new CancellationTokenSource();
@@ -90,6 +96,17 @@ namespace VoiceMod.Chat.Fleck
                         }
                     }
                 }
+            }
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                var task = _client.CloseAsync(WebSocketCloseStatus.NormalClosure, $"{_client} Disconnecting", CancellationToken.None);
+                task.Wait(); task.Dispose();
+
+                _msgText.Show("Disconnected from the server.");
             }
         }
     }

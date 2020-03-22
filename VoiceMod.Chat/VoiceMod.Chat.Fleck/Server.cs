@@ -13,9 +13,9 @@ namespace VoiceMod.Chat.Fleck
 
         private readonly IMessageText _msgText;
         private readonly int _port;
+        private IWebSocketServer _server;
 
         private IList<IWebSocketConnection> ConnectedSockets { get; set; } = new List<IWebSocketConnection>();
-
 
         public Server(IMessageText msgText, int port)
         {
@@ -27,9 +27,9 @@ namespace VoiceMod.Chat.Fleck
         {
             var input = string.Empty;
 
-            var server = new WebSocketServer($"{Url}:{_port}");
+            _server = new WebSocketServer($"{Url}:{_port}");
             await Task.Run(() =>
-            server.Start(socket =>
+            _server.Start(socket =>
             {
                 socket.OnOpen = () =>
                 {
@@ -54,6 +54,21 @@ namespace VoiceMod.Chat.Fleck
             foreach (var socket in ConnectedSockets)
             {
                 await Task.Run(() => socket.Send(message));
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                SendMessage("Server is shutting down. No further message will be sent.").GetAwaiter().GetResult();
+                _server.Dispose();
             }
         }
     }

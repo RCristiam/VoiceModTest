@@ -27,14 +27,17 @@ namespace VoiceMod.Chat.Executable
                 var comm = factory.Invoke(port);
 
                 comm.Initialize();
-
+                Console.Write("Write a text (type exit to quit): ");
                 input = Console.ReadLine();
                 while (input != "exit")
                 {
                     comm.SendMessage(input);
 
+                    Console.Write("Write a text (type exit to quit): ");
                     input = Console.ReadLine();
                 }
+
+                comm.Dispose();
             }
         }
 
