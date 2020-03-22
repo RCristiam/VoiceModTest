@@ -43,8 +43,16 @@ namespace VoiceMod.Chat.Executable
         private static IContainer CreateAutofacBuilder() =>
             new ContainerBuilder()
             .CreateCommunicationFactory()
-            .CreateMessageText()
+            .CreateMessageText(new MessageText())
             .Build();
 
+    }
+
+    internal class MessageText : IMessageText
+    {
+        public void Show(string text)
+        {
+            Console.WriteLine(text);
+        }
     }
 }

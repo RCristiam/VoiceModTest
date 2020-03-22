@@ -1,25 +1,15 @@
 ﻿using Autofac;
-using System;
 using VoiceMod.Chat.Abstractions;
 
 namespace VoiceMod.Chat.Bootstrap
 {
     public static class MessageTextExtensions
     {
-        public static ContainerBuilder CreateMessageText(this ContainerBuilder containerBuilder)
+        public static ContainerBuilder CreateMessageText(this ContainerBuilder containerBuilder, IMessageText messageText)
         {
-            containerBuilder.RegisterType<MessageText>().As<IMessageText>();
+            containerBuilder.RegisterInstance(messageText).As<IMessageText>();
 
             return containerBuilder;
-        }
-
-
-        public class MessageText : IMessageText
-        {
-            public void Show(string text)
-            {
-                Console.WriteLine(text);
-            }
         }
     }
 }
