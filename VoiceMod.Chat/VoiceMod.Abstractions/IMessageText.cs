@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace VoiceMod.Chat.Abstractions
+﻿namespace VoiceMod.Chat.Abstractions
 {
     public interface IMessageText
     {
