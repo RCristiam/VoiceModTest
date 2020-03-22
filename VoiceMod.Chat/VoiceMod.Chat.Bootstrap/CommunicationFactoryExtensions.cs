@@ -17,13 +17,14 @@ namespace VoiceMod.Chat.Bootstrap
                 var context = c.Resolve<IComponentContext>();
                 return (port) =>
                 {
+                    var msgText = context.Resolve<IMessageText>();
                     if (IsPortInUse(port))
                     {
-                        return new Client(port);
+                        return new Client(msgText, port);
                     }
                     else
                     {
-                        return new Server(port);
+                        return new Server(msgText, port);
                     }
                 };
             }));

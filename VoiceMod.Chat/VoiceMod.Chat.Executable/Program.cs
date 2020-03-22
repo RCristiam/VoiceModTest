@@ -38,7 +38,7 @@ namespace VoiceMod.Chat.Executable
             }
         }
 
-        private static IContainer CreateAutofacBuilder() => 
+        private static IContainer CreateAutofacBuilder() =>
             new ContainerBuilder()
             .CreateCommunicationFactory()
             .CreateMessageText()

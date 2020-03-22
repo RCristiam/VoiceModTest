@@ -54,7 +54,7 @@ namespace VoiceMod.Chat.Fleck
             await _client.SendAsync(
                    new ArraySegment<byte>(Encoding.UTF8.GetBytes($"{NickName}: {message}")),
                    WebSocketMessageType.Text,
-                   false,
+                   true,
                    tokSrc.Token
                );
         }
