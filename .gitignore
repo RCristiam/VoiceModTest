@@ -31,9 +31,11 @@ bld/
 *.vspx
 *.sap
 
+# Visual Studio publish file
+*.pubxml
+
 # Click-Once directory
 publish/
-
 
 # NuGet Packages
 *.nupkg
